@@ -1,0 +1,14 @@
+{
+  "name": "publicador",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Publica no Instagram as artes da fila de cada cliente (substitui o agendamento do Metricool)",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "publicar": "node scripts/publicar.mjs",
+    "simular": "node scripts/publicar.mjs --simular",
+    "verificar": "node scripts/verificar.mjs",
+    "renovar": "node scripts/renovar-token.mjs"
+  }
+}

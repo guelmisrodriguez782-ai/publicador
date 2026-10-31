@@ -1,0 +1,23 @@
+name: Renovar tokens do Instagram
+
+on:
+  schedule:
+    # Toda segunda, 9h07 em Brasília. O token vale 60 dias; renovar toda semana dá folga de sobra.
+    - cron: "7 12 * * 1"
+  workflow_dispatch:
+
+jobs:
+  renovar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Renovar e gravar nos secrets
+        env:
+          SEGREDOS: ${{ toJSON(secrets) }}
+          # Token pessoal com permissão "Secrets: read and write" neste repositório (o GITHUB_TOKEN não pode gravar secrets)
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: node scripts/renovar-token.mjs

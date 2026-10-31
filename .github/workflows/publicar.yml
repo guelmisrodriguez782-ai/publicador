@@ -1,0 +1,44 @@
+name: Publicar no Instagram
+
+on:
+  schedule:
+    # Minutos quebrados: no horário cheio o GitHub atrasa mais. Atraso típico de 5 a 20 min.
+    - cron: "7,22,37,52 * * * *"
+  workflow_dispatch:
+    inputs:
+      simular:
+        description: "Só mostrar o que seria publicado"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+# Nunca duas execuções ao mesmo tempo (evita post duplicado)
+concurrency:
+  group: publicar
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Publicar posts do horário
+        env:
+          SEGREDOS: ${{ toJSON(secrets) }}
+        run: node scripts/publicar.mjs ${{ inputs.simular && '--simular' || '' }}
+      - name: Gravar estado
+        if: always()
+        run: |
+          git config user.name "publicador"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add estado
+          git diff --cached --quiet && exit 0
+          git commit -m "estado: $(date -u +%Y-%m-%dT%H:%MZ)"
+          git pull --rebase
+          git push
