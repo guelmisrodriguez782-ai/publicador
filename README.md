@@ -32,14 +32,7 @@ GitHub Actions (toda segunda)
 2. No painel do app, em **Gerar tokens de acesso → Adicionar conta**, entre com o Instagram do cliente e autorize.
    Se pedir convite de testador: em **Funções do app → Testadores do Instagram** adicione o @ e aceite no Instagram do cliente (Configurações → Permissões de sites → Apps e sites → Convites de testador).
 3. Clique em **Gerar token** e copie (vale 60 dias; a renovação semanal estende sozinha).
-4. Grave o token nos secrets, colando quando pedir:
-   ```
-   gh secret set IG_TOKEN_ELOHIM
-   ```
-   Para testar no PC, crie também o arquivo `.env` (já está no `.gitignore`):
-   ```
-   IG_TOKEN_ELOHIM=cole_o_token_aqui
-   ```
+4. Guarde o token: `node scripts/guardar-token.mjs elohim` e cole quando pedir (não aparece na tela). O script confere se o token é da conta certa e grava no `.env` (fora do Git) e no secret do GitHub.
 5. Confira: `node scripts/verificar.mjs` deve mostrar `✓ elohim: @autocenterelohimsuspensao`.
 
 ### 4. Renovação automática do token
