@@ -74,7 +74,8 @@ node scripts/publicar.mjs --simular --agora 2026-11-09T15:10:00-03:00
 
 ### Novo cliente
 1. Acrescente em `clientes.json`: `"cliente": { "nome", "instagram": "@ sem arroba", "segredoToken": "IG_TOKEN_CLIENTE", "fuso": "America/Sao_Paulo", "janelaMinutos": 180 }`.
-2. Faça o passo 3 da configuração com o novo `segredoToken`. O workflow não precisa mudar.
+2. Faça o passo 3 da configuração com o novo `segredoToken`.
+3. Nos dois workflows (`.github/workflows/*.yml`), acrescente no `env:` a linha `IG_TOKEN_CLIENTE: ${{ secrets.IG_TOKEN_CLIENTE }}`. (Passar todos os secrets de uma vez com `toJSON(secrets)` faz o GitHub bloquear o workflow como suspeito.)
 
 ## Limites da API
 - 100 posts por conta a cada 24 h.

@@ -30,7 +30,8 @@ jobs:
           node-version: 22
       - name: Publicar posts do horário
         env:
-          SEGREDOS: ${{ toJSON(secrets) }}
+          # Um secret por cliente; cliente novo = uma linha aqui e no outro workflow
+          IG_TOKEN_ELOHIM: ${{ secrets.IG_TOKEN_ELOHIM }}
         run: node scripts/publicar.mjs ${{ inputs.simular && '--simular' || '' }}
       - name: Gravar estado
         if: always()

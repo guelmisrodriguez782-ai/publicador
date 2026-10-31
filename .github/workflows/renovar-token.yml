@@ -17,7 +17,8 @@ jobs:
           node-version: 22
       - name: Renovar e gravar nos secrets
         env:
-          SEGREDOS: ${{ toJSON(secrets) }}
+          # Um secret por cliente; cliente novo = uma linha aqui e no outro workflow
+          IG_TOKEN_ELOHIM: ${{ secrets.IG_TOKEN_ELOHIM }}
           # Token pessoal com permissão "Secrets: read and write" neste repositório (o GITHUB_TOKEN não pode gravar secrets)
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: node scripts/renovar-token.mjs

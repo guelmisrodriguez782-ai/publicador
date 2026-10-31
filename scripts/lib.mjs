@@ -28,7 +28,7 @@ export const clientes = () => lerJson(path.join(RAIZ, "clientes.json"), {});
 export const arquivoFila = (cliente) => path.join(RAIZ, "fila", `${cliente}.json`);
 export const arquivoEstado = (cliente) => path.join(RAIZ, "estado", `${cliente}.json`);
 
-// No Actions, todos os secrets chegam juntos em SEGREDOS (toJSON(secrets)), então cliente novo não exige mexer no workflow
+// No Actions cada token vem como variável de ambiente (env do workflow); SEGREDOS (JSON) serve para testes
 export function segredo(nome) {
   if (process.env[nome]) return process.env[nome];
   const todos = process.env.SEGREDOS ? JSON.parse(process.env.SEGREDOS) : {};
